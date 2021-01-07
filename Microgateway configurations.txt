@@ -1,0 +1,104 @@
+MICROGATEWAY
+
+#Data persistent (using real time db( postgress for keycloak)
+
+--microgateway security
+
+[keyManager]
+  serverUrl = "https://localhost:8443"
+  tokenContext = "oauth2"
+  external = true
+  issuer = "https://localhost:8443/auth/realms/master"
+  [keymanager.security.oauth2]
+    enabled = true
+    tokenUrl = "https://localhost:8443/auth/realms/master/protocol/openid-connect/token"
+    [keymanager.security.oauth2.password]
+	  username = "admin"
+      password = "admin"
+	  clientId = "apim-client"
+      clientSecret = "4a5e3919-d607-47eb-8c74-66fc1c6f0426"
+
+[[jwtTokenConfig]]
+  issuer = "https://localhost:8443/auth/realms/master"
+  certificateAlias = "keycloak"
+  validateSubscription = false
+  consumerKeyClaim = "aud"
+  audience = "account"
+  jwksURL = "https://localhost:8443/auth/realms/master/protocol/openid-connect/certs"
+
+[[jwtTokenConfig]]
+  issuer = "http://localhost:8080/auth/realms/master"
+  certificateAlias = "keycloak"
+  validateSubscription = false
+  consumerKeyClaim = "aud"
+  audience = "account"
+  jwksURL = "http://localhost:8080/auth/realms/master/protocol/openid-connect/certs"
+
+
+-- microgateway analytics
+
+[analytics]
+  # The configured API Manager analytics stream version
+  streamVersion = "3.2.0"
+  [analytics.fileUpload]
+    enable = true
+    uploadingTimeSpanInMillis = 600000
+    initialDelayInMillis = 5000
+    uploadingEndpoint = "https://192.168.96.5:9444/analytics/v1.0/usage/upload-file"
+    rotatingPeriod = 600000
+    taskUploadFiles = true
+    username = "admin"
+    password = "admin"
+
+[analytics]
+  # The configured API Manager analytics stream version
+  streamVersion = "3.2.0"
+  [analytics.gRPCAnalytics]
+    enable = true
+    # APIM Analytics endpoint configured to accept gRPC analytics
+    endpointURL = "https://192.168.96.5:9806"
+    # Time interval in milliseconds for gRPC connection recovery task
+    reconnectTimeInMillies = 6000
+	
+	
+--monitoring and observablity
+
+[b7a.users]
+  [b7a.users.prometheus]
+	password= "@sha256:{5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8}"
+	scopes= "observability"
+
+[b7a.observability.metrics]
+  enabled = true
+  reporter = "prometheus"
+  
+[b7a.observability.metrics.prometheus]
+  port=9797
+  jmx_port = 8080
+  secure_port = 9000
+  
+[b7a.observability.tracing]
+  enabled=true
+  name="jaeger"
+[b7a.observability.tracing.jaeger.sampler]
+  type="const"
+  param=1.0
+[b7a.observability.tracing.jaeger.reporter]
+  hostname="localhost"
+  port=5775
+[b7a.observability.tracing.jaeger.reporter.flush.interval]
+  ms=2000
+[b7a.observability.tracing.jaeger.reporter.max.buffer]
+  spans=1000
+
+
+--keycloak integration	
+  export ballerina truststroe and import keyclock cert into that
+  copy the latest ballerina truststore into the docker container location
+
+
+--keycloak roles auth spring boot app deployed in docker
+
+[authConfig]
+  authorizationHeader = "Authorization"
+  removeAuthHeaderFromOutMessage = false
