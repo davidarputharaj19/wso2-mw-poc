@@ -1,0 +1,177 @@
+openapi: 3.0.1
+info:
+  title: microservices
+  version: '1'
+servers:
+  - url: /
+security:
+  - default: []
+paths:
+  /employee:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8001'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8001'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /account:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8002'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8002'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /account/all:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8002'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8002'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false        
+  /test/anonymous:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /test/user:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /test/admin:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+  /test/all-user:
+    get:
+      responses:
+        '200':
+          description: OK
+      security:
+        - default: []
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-production-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-sandbox-endpoints:
+        urls:
+          - 'http://localhost:8004'
+      x-wso2-application-security:
+        security-types:
+          - oauth2
+        optional: false
+components:
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ''
+          scopes: {}
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+    - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+    - authorization
+    - Access-Control-Allow-Origin
+    - Content-Type
+    - SOAPAction
+    - apikey
+    - testKey
+  accessControlAllowMethods:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - PATCH
+    - OPTIONS
+x-wso2-basePath: /
+x-wso2-transports:
+  - http
+  - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300
